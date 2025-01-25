@@ -26,6 +26,15 @@ install_htr_pipeline () {
 
 CURRENT_DIR=$(pwd)
 
+# ========================================
+# Check if required programs are available
+# ========================================
+
+if ! command -v conda &> /dev/null; then
+    echo "Error: conda is not installed or not in your PATH." >&2
+    exit 1
+fi
+
 # ====================
 # Installation process
 # ====================
