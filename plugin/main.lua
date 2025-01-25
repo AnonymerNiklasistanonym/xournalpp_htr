@@ -32,7 +32,15 @@ function run()
   if document_structure['xoppFilename']:len() == 0 then
     app.openDialog('Please save document prior to exporting it as searchable PDF!', {"Ok"}, "", true)
   else
-    app.fileDialogSave("save_file", "untitled.pdf")
+    if type(app.fileDialogSave) == "function" then
+      app.fileDialogSave("save_file", "untitled.pdf")
+    else
+      -- Add fallback to older lua API version where app.fileDialogSave is not available
+      local filePath = app.saveAs("untitled.pdf")
+      if filePath then
+        save_file(filePath)
+      end
+    end
   end
 
 end
